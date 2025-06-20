@@ -1,0 +1,29 @@
+cliente_id: clienteA
+modo_desenvolvimento: false
+api_url: https://0fo89hcdu9.execute-api.us-east-2.amazonaws.com/prod/alerta
+#api_url_descartes: https://api.safeteer.com/entrada/descartes_em_analise
+#Aqui vai ficar a url que o modulo vai enviar o log descartado
+#O que nao cair na malha do regex e do ML será enviado para a IA_N0
+
+modulos:
+  - nome: log_file
+    habilitado: false
+    config:
+      caminho: /opt/safeteer/input/logfile.log
+      regex: '.+'
+      linhas_recentes: 50
+      case_insensitive: true
+
+  - nome: syslog_server
+    habilitado: true
+    config:
+      porta: 55140
+      caminho_log: /opt/safeteer/input/syslog.log
+
+  - nome: parser_syslog
+    habilitado: true
+    config:
+      caminho: /opt/safeteer/input/syslog.log
+      regex: 'ALERT|FAILED|DENIED|ALERTA|FALHA|NEGADO'
+      linhas_recentes: 50
+      case_insensitive: true
