@@ -25,5 +25,5 @@ jobs:
 
       - name: Fazer upload para o S3
         run: |
-          echo "Upload via OIDC: base/config.yaml → s3://safeteer-config/base/config.yaml"
-          aws s3 cp base/config.yaml s3://safeteer-config/base/config.yaml --acl bucket-owner-full-control
+          echo "Upload via OIDC: base/config.yaml → s3://safeteer-config/base/config-global.yaml"
+          aws s3 cp base/config.yaml s3://safeteer-config/base/config-global.yaml --acl bucket-owner-full-control
