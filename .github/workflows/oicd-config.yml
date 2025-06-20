@@ -20,8 +20,8 @@ jobs:
       - name: Configurar credenciais via OIDC
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::123456789012:role/GitHubActionsOIDCRole
-          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::323228886994:role/pipeline-oicd
+          aws-region: us-east-2
 
       - name: Fazer upload para o S3
         run: |
