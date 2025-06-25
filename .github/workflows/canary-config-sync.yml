@@ -24,3 +24,10 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::323228886994:role/pipeline-oicd
           aws-region: us-east-2
+
+      - name: Instalar dependências
+        run: |
+          pip install boto3 pyyaml
+
+      - name: Executar script de merge
+        run: python merge_configs.py
