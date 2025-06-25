@@ -30,4 +30,4 @@ jobs:
           pip install boto3 pyyaml
 
       - name: Executar script de merge
-        run: python merge_configs.py
+        run: python merge_canary.py
