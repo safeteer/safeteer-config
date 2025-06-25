@@ -22,29 +22,29 @@ def salvar_yaml(key, data):
     )
 
 
-# 🧠 Merge normal para dicionários: adiciona apenas chaves que não existem
-def merge_aditivamente(global_cfg, cliente_cfg):
-    for k, v in global_cfg.items():
-        if k not in cliente_cfg:
-            cliente_cfg[k] = v
-        elif isinstance(v, dict) and isinstance(cliente_cfg[k], dict):
-            merge_aditivamente(v, cliente_cfg[k])
-        elif isinstance(v, list) and k == "modulos":
-            cliente_cfg[k] = merge_modulos(v, cliente_cfg[k])
-    return cliente_cfg
+# 🔁 Merge recursivo que só adiciona novas chaves, sem sobrescrever valores existentes
+def merge_aditivamente(origem, destino):
+    for k, v in origem.items():
+        if k not in destino:
+            destino[k] = v
+        elif isinstance(v, dict) and isinstance(destino[k], dict):
+            merge_aditivamente(v, destino[k])
+        elif isinstance(v, list) and isinstance(destino[k], list) and k == "modulos":
+            destino[k] = merge_modulos(v, destino[k])
+    return destino
 
 
-# 🧠 Merge inteligente de módulos (lista de dicts por nome)
+# 🧠 Lógica de merge para modulos[] (lista de dicts)
 def merge_modulos(mods_global, mods_cliente):
     nomes_cliente = {m['nome']: m for m in mods_cliente}
 
     for mod_global in mods_global:
         nome = mod_global['nome']
         if nome not in nomes_cliente:
-            mods_cliente.append(mod_global)  # Novo módulo: adiciona tudo
+            mods_cliente.append(mod_global)  # Novo módulo: adiciona completo
         else:
             mod_cliente = nomes_cliente[nome]
-            merge_aditivamente(mod_global, mod_cliente)  # Merge só das partes novas
+            merge_aditivamente(mod_global, mod_cliente)  # Merge apenas de campos novos
     return mods_cliente
 
 
@@ -65,7 +65,7 @@ def main():
 
         merged = merge_aditivamente(global_config, cliente_config)
         salvar_yaml(key, merged)
-        print(f"Atualizado: {cliente}")
+        print(f"✅ Atualizado: {cliente}")
 
 
 if __name__ == "__main__":
