@@ -6,6 +6,10 @@ on:
     types:
       - completed
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   canary-update:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -20,10 +24,3 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::323228886994:role/pipeline-oicd
           aws-region: us-east-2
-
-      - name: Instalar dependências Python
-        run: |
-          pip install boto3 pyyaml deepmerge
-
-      - name: Executar script de merge
-        run: python merge_configs.py
