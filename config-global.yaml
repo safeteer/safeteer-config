@@ -4,6 +4,8 @@ api_url: https://0fo89hcdu9.execute-api.us-east-2.amazonaws.com/prod/alerta
 api_url_descartes: https://api.safeteer.com/entrada/descartes_em_analise
 #Aqui vai ficar a url que o modulo vai enviar o log descartado
 #O que nao cair na malha do regex e do ML será enviado para a IA_N
+#Adicionando uma linha de comentário para testar
+
 
 modulos:
   - nome: log_file
