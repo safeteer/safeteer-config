@@ -1,0 +1,29 @@
+name: Canary update config.yaml
+
+on:
+  workflow_run:
+    workflows: ["Deploy config.yaml global via OIDC"]
+    types:
+      - completed
+
+jobs:
+  canary-update:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar credenciais AWS via OIDC
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::323228886994:role/pipeline-oicd
+          aws-region: us-east-2
+
+      - name: Instalar dependências Python
+        run: |
+          pip install boto3 pyyaml deepmerge
+
+      - name: Executar script de merge
+        run: python merge_configs.py
