@@ -29,4 +29,4 @@ modulos:
       regex: 'ALERT|FAILED|DENIED|ALERTA|FALHA|NEGADO'
       linhas_recentes: 50
       case_insensitive: true
-      linha_teste: teste
+      linha_teste: testeCanary
