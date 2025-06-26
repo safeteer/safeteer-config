@@ -1,14 +1,14 @@
-name: Deploy Manual Global (todos os clientes)
+name: Deploy Geral (todos os clientes)
 
 on:
-  workflow_dispatch:  # <- ativação manual no GitHub UI
+  workflow_dispatch:
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  deploy-global:
+  deploy-geral:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,5 +25,5 @@ jobs:
         run: |
           pip install boto3 pyyaml
 
-      - name: Executar deploy completo
+      - name: Executar deploy geral
         run: python deploy_geral.py
