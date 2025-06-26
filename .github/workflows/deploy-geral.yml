@@ -1,0 +1,29 @@
+name: Deploy Geral (todos os clientes)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-geral:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar credenciais AWS via OIDC
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::323228886994:role/pipeline-oicd
+          aws-region: us-east-2
+
+      - name: Instalar dependências
+        run: |
+          pip install boto3 pyyaml
+
+      - name: Executar deploy geral
+        run: python deploy_geral.py
